@@ -1,0 +1,289 @@
+ul{
+    list-style-type: none;
+}
+
+.container{
+    max-width: 1440px;
+    margin: 0 auto;
+    background-color: #E4F3FB;
+    padding-top: 45px;
+    padding-bottom: 45px;
+  }
+
+.sign_container{
+    width: 456px;
+    height: 934px;
+    border-radius: 10px;
+    border: 1px solid #BCC3DD;
+    padding: 32px 48px 32px 48px;
+    background-color: #FAFEFF;
+    margin: 0 auto;
+    box-shadow: 5px 5px 10px 0px rgba(188, 195, 221, 1), -5px -5px 10px 0px rgba(250, 251, 255, 1) ;
+
+}
+
+.logo{
+    font-family: "SF Pro Display";
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 57.28px;
+    text-align: center;
+    color: #030712;
+    margin-bottom: 8px;
+}
+
+.text{
+    font-family: "SF Pro Display";
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    color: #030712;
+}
+
+.nav_link{
+    display: flex;
+    padding: 0; 
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.sign_up_text{
+    width: 228px;
+    height: 56px;
+    border-bottom: 1px solid #868B97;
+    font-family: "SF Pro Display";
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28.64px;
+    text-align: center;
+    justify-content: center;
+    color: #030712;
+}
+
+.sign_in_text{
+    width: 228px;
+    height: 56px;  
+}
+
+.sign_in_link{
+  font-family: "SF Pro Display";
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28.64px;
+    text-align: center;
+    color: #030712;
+    text-decoration: none;
+    margin: 0 auto;
+   padding: 13.5px 91px;
+}
+
+.social_media{
+  display: flex;
+  gap: 16px;
+  /* justify-content: center; */
+  margin-bottom: 32px;
+}
+
+.btn_google{
+  position: relative;
+  width: 312px;
+  height: 56px;
+  border-radius: 10px;
+  border: 1px solid #F3F4F6;
+  color: #000000;
+  background-color: #F3F4F6;
+  padding: 16px;
+  font-family: "SF Pro Display";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23.87px;
+  box-shadow: 5px 5px 10px 0px rgba(188, 195, 221, 1), -5px -5px 10px 0px rgba(250, 251, 255, 1);;
+}
+
+.btn_google:hover,
+.btn_google:focus{
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_google:active{
+  background-color: #E5E7EB;
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_google img{
+  position: absolute;
+  left: 16px;
+
+}
+
+.btn_apple{
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  padding: 16px;
+  background-color: #000;
+  border: #000;
+}
+
+.btn_apple:hover,
+.btn_apple:focus{
+  background-color: #252525;
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_apple:active{
+  background-color: #454343;
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_apple img{
+  width: 100%;
+}
+
+.btn_facebook{
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  padding: 16px;
+  background-color: #2563EB;
+  border: #2563EB;
+}
+
+.btn_facebook:hover,
+.btn_facebook:focus{
+  background-color: #1D4ED8;
+  box-shadow: 2.5px 2.5px 5px 0px rgba(9, 51, 207, 0.5) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_facebook:active{
+  background-color: #1E40AF;
+  box-shadow: 2.5px 2.5px 5px 0px rgba(9, 51, 207, 0.5) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_facebook img{
+  width: 100%;
+}
+
+.text_or{
+  font-family: "SF Pro Display";
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28.64px;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.contsiner_input{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.label{
+  display: block;
+  font-family: "SF Pro Display";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.71px;
+  color: #030712; 
+}
+
+.label span{
+  color: #BE0404;
+}
+
+.input{
+  display: block;
+  min-width: 424px;
+  border-radius: 8px;
+  border: 1px solid #E9E9E9;
+  outline: transparent;
+  border-color: #F8FAFC;
+  padding-top: 19px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 19px;
+  margin-top: 4px;
+  box-shadow: 5px 5px 10px 0px rgba(188, 195, 221, 1), -5px -5px 10px 0px rgba(250, 251, 255, 1);
+}
+
+.input:hover,
+.input:focus{
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.input:active{
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+button{
+  cursor: pointer;
+}
+
+.checkbox{
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.checkbox_text{
+  font-family: "SF Pro Display";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.71px;
+  color: #030712;
+}
+
+.checkbox_remember{
+  max-width: 100%;
+  box-shadow: 5px 5px 6px 0px rgba(188, 195, 221, 0.4);
+}
+
+.checkbox_ok{
+  max-width: 100%;
+  border: 1.5px solid #FF0F0F;
+}
+
+p span{
+  font-family: "SF Pro Display";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.71px;
+  color: #4285F4;
+}
+
+.btn_submite{
+  min-width: 456px;
+  border-radius: 8px;
+  padding: 16px 36px 16px 36px;
+  border: transparent;
+  font-family: "SF Pro Display";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23.87px;
+  margin-top: 32px;
+  color: #FFFFFF;
+  background-color: #0EA5E9;
+  box-shadow: 5px 5px 10px 0px rgba(189, 198, 233, 1), -5px -5px 10px 0px rgba(250, 251, 255, 1);
+}
+
+.btn_submite:hover,
+.btn_submite:focus{
+  background-color: #0D97D6;
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_submite:active{
+  background-color: #0C8FCB;
+  box-shadow: 2.5px 2.5px 5px 0px rgba(188, 195, 221, 1) inset, -2.5px -2.5px 5px 0px rgba(250, 251, 255, 1) inset;
+}
+
+.btn_submite:disabled{
+  background-color: #D2DDE8 ;
+  box-shadow: 0px 8px 16px 0px rgba(10, 49, 187, 0.25);
+}
+
