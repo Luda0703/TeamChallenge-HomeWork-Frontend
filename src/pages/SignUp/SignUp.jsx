@@ -6,18 +6,17 @@ import style from "./SignUp.module.css";
 const SignUp = () => {
   const [visible, setVisible] = useState(false);
   const [visibleRepeat, setVisibleRepeat] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatePassword, setRepeatePassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatePassword, setRepeatePassword] = useState("");
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [lengthError, setLengthError] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(null);
   const [error, setError] = useState(false);
 
-
-
   const validateEmail = (email) => {
-    const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regEmail =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!regEmail.test(email)) {
       return setError("Invalid Email");
     } else if (regEmail.test(email)) {
@@ -25,16 +24,16 @@ const SignUp = () => {
     }
   };
 
-//   const validatePassword = (password) => {
-//     const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
-//     if (!regPassword.test(password)) {
-//       return setError("Invalid Password");
-//     } else if (regPassword.test(password)) {
-//       return true;
-//     }
-//   };
+  //   const validatePassword = (password) => {
+  //     const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
+  //     if (!regPassword.test(password)) {
+  //       return setError("Invalid Password");
+  //     } else if (regPassword.test(password)) {
+  //       return true;
+  //     }
+  //   };
 
-const handleEmailChange = (e) => {
+  const handleEmailChange = (e) => {
     e.preventDefault();
     const newEmail = e.target.value;
     setEmail(newEmail);
@@ -55,16 +54,16 @@ const handleEmailChange = (e) => {
   };
 
   const toggleShowPassword = () => {
-    setVisible(!visible)
-  }
+    setVisible(!visible);
+  };
 
   const toggleShowRepeatPassword = () => {
-    setVisibleRepeat(!visibleRepeat)
-  }
+    setVisibleRepeat(!visibleRepeat);
+  };
 
   const checkPasswordMatch = (newRepeatPassword) => {
-    setPasswordMatchError(newRepeatPassword !== password)
-  }
+    setPasswordMatchError(newRepeatPassword !== password);
+  };
 
   const checkPassworsStrength = (newPassword) => {
     const minLength = 6;
@@ -74,31 +73,29 @@ const handleEmailChange = (e) => {
     const hasLetters = /[a-z]/.test(newPassword);
     const hasUpperCase = /[A-Z]/.test(newPassword);
     const hasNumber = /\d/.test(newPassword);
-    const hasSpecialChars = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(newPassword);
+    const hasSpecialChars = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(
+      newPassword
+    );
 
-    const strength = isLengthValid + hasLetters + hasUpperCase + hasNumber + hasSpecialChars;
+    const strength =
+      isLengthValid + hasLetters + hasUpperCase + hasNumber + hasSpecialChars;
 
     setPasswordStrength(strength);
-  }
+  };
 
   const getStrangeColor = () => {
-    if(lengthError) {
-        return "red"
-    } else if(passwordStrength === null) {
-        return ""
-    } 
-  } 
+    if (lengthError) {
+      return "red";
+    } else if (passwordStrength === null) {
+      return "";
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email)
-    console.log(password)
-    console.log(repeatePassword)
-    // const { email, password } = state;
-
-    // if (validateEmail(email) && validatePassword(password)) {
-    //   alert("Connected !");
-    // }
+    console.log(email);
+    console.log(password);
+    console.log(repeatePassword);
   };
 
   return (
@@ -116,9 +113,7 @@ const handleEmailChange = (e) => {
           </li>
         </ul>
 
-        <form 
-        onSubmit={handleSubmit}
-        >
+        <form onSubmit={handleSubmit}>
           <div className={style.social_media}>
             <button className={style.btn_google}>
               <img src="/public/images/google.svg" alt="google" />
@@ -138,7 +133,7 @@ const handleEmailChange = (e) => {
               {" "}
               Введіть email <span>*</span>
               <input
-                name='email'
+                name="email"
                 value={email}
                 className={style.input}
                 type="email"
@@ -147,9 +142,6 @@ const handleEmailChange = (e) => {
                 required
               />
             </label>
-            {/* {validateEmail && (
-                <p style={{color: "red"}}>Неправильно введена пошта</p>
-            )} */}
 
             <label className={style.label}>
               {" "}
@@ -162,8 +154,8 @@ const handleEmailChange = (e) => {
                 onChange={handlePasswordChange}
                 placeholder=" "
                 required
+                minLength="6"
               />
-
               <div
                 className={`${style.eye} ${style.eye_open}`}
                 onClick={toggleShowPassword}
@@ -187,6 +179,7 @@ const handleEmailChange = (e) => {
                 onChange={handleRepeatePasswordChange}
                 placeholder=" "
                 required
+                minLength="6"
               />
               <div
                 className={`${style.eye} ${style.eye_open}`}
@@ -200,16 +193,16 @@ const handleEmailChange = (e) => {
               </div>
             </label>
             <div>
-                {lengthError && (
-                    <p style={{color: "red"}}>минимум 6 символов</p>
-                )}
-                {passwordMatchError && (
-                    <p style={{color: "red"}}>пароли не совпадают</p>
-                )}
-                {passwordStrength !== null && !lengthError && (
-                    <p style={{color: getStrangeColor}}></p>
-                )}
-              </div>
+              {lengthError && (
+                <p style={{ color: "red" }}>минимум 6 символов</p>
+              )}
+              {passwordMatchError && (
+                <p style={{ color: "red" }}>пароли не совпадают</p>
+              )}
+              {passwordStrength !== null && !lengthError && (
+                <p style={{ color: getStrangeColor }}></p>
+              )}
+            </div>
           </div>
 
           <div className={style.checkbox}>
@@ -218,12 +211,12 @@ const handleEmailChange = (e) => {
           </div>
 
           <div className={style.checkbox}>
-            <input className={style.checkbox_ok} type="checkbox" />
+            <input className={style.checkbox_ok} type="checkbox" required />
             <p className={style.checkbox_text}>
               {" "}
               Натискаючи кнопку, ви даєте згоду на обробку своїх персональних
-              даних і погоджуєтесь <span>з правилами надання послуг</span> та з
-              політикою конфіденційності.{" "}
+              даних і погоджуєтесь <a href="#">з правилами надання послуг</a> та
+              з політикою конфіденційності.{" "}
             </p>
           </div>
 
