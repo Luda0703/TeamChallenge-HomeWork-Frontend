@@ -1,57 +1,18 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import validationSchemaSignUp from "../../schemas/ValidationSchemaSignUpForm";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import style from "./SignUp.module.css";
 
 const SignUp = () => {
   const [visible, setVisible] = useState(false);
   const [visibleRepeat, setVisibleRepeat] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatePassword, setRepeatePassword] = useState("");
-  const [passwordMatchError, setPasswordMatchError] = useState(false);
-  const [lengthError, setLengthError] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState(null);
-  const [error, setError] = useState(false);
-
-  const validateEmail = (email) => {
-    const regEmail =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!regEmail.test(email)) {
-      return setError("Invalid Email");
-    } else if (regEmail.test(email)) {
-      return true;
-    }
-  };
-
-  //   const validatePassword = (password) => {
-  //     const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
-  //     if (!regPassword.test(password)) {
-  //       return setError("Invalid Password");
-  //     } else if (regPassword.test(password)) {
-  //       return true;
-  //     }
-  //   };
-
-  const handleEmailChange = (e) => {
-    e.preventDefault();
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-  };
-
-  const handlePasswordChange = (e) => {
-    e.preventDefault();
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    checkPassworsStrength(newPassword);
-  };
-
-  const handleRepeatePasswordChange = (e) => {
-    e.preventDefault();
-    const newRepeatPassword = e.target.value;
-    setRepeatePassword(newRepeatPassword);
-    checkPasswordMatch(newRepeatPassword);
-  };
+  const [inputState, setInputState] = useState({
+    email: "",
+    password: "",
+    repeatPassword: "",
+  });
 
   const toggleShowPassword = () => {
     setVisible(!visible);
@@ -61,48 +22,17 @@ const SignUp = () => {
     setVisibleRepeat(!visibleRepeat);
   };
 
-  const checkPasswordMatch = (newRepeatPassword) => {
-    setPasswordMatchError(newRepeatPassword !== password);
-  };
-
-  const checkPassworsStrength = (newPassword) => {
-    const minLength = 6;
-    setLengthError(newPassword.length < minLength);
-
-    const isLengthValid = newPassword.length >= minLength;
-    const hasLetters = /[a-z]/.test(newPassword);
-    const hasUpperCase = /[A-Z]/.test(newPassword);
-    const hasNumber = /\d/.test(newPassword);
-    const hasSpecialChars = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(
-      newPassword
-    );
-
-    const strength =
-      isLengthValid + hasLetters + hasUpperCase + hasNumber + hasSpecialChars;
-
-    setPasswordStrength(strength);
-  };
-
-  const getStrangeColor = () => {
-    if (lengthError) {
-      return "red";
-    } else if (passwordStrength === null) {
-      return "";
-    }
-  };
-
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email);
-    console.log(password);
-    console.log(repeatePassword);
+    console.log(inputState.email);
+    console.log(inputState.password);
+    console.log(inputState.repeatPassword);
   };
 
   return (
     <div className={style.container}>
       <div className={style.sign_container}>
-        <h1 className={style.logo}>дім&Work</h1>
-        <p className={style.text}>робота+житло у 2 кліки</p>
+        <h1 className={style.logo}>Дім&Work</h1>
+        <p className={style.text}>Робота+житло у 2 кліки</p>
         <p className={style.text}>Зручно. Швидко. Ефективно.</p>
         <ul className={style.nav_link}>
           <li className={style.sign_up_text}>Реєстрація</li>
@@ -113,117 +43,188 @@ const SignUp = () => {
           </li>
         </ul>
 
-        <form onSubmit={handleSubmit}>
-          <div className={style.social_media}>
-            <button className={style.btn_google}>
-              <img src="/public/images/google.svg" alt="google" />
-              Продовжити з Google
-            </button>
-            <button className={style.btn_apple}>
-              <img src="/public/images/apple.svg" alt="apple" />
-            </button>
-            <button className={style.btn_facebook}>
-              <img src="/public/images/facebook.svg" alt="facebook" />
-            </button>
-          </div>
-          <p className={style.text_or}>або</p>
-
-          <div className={style.contsiner_input}>
-            <label className={style.label}>
-              {" "}
-              Введіть email <span>*</span>
-              <input
-                name="email"
-                value={email}
-                className={style.input}
-                type="email"
-                onChange={handleEmailChange}
-                placeholder=" "
-                required
-              />
-            </label>
-
-            <label className={style.label}>
-              {" "}
-              Пароль <span>*</span>
-              <input
-                name="password"
-                value={password}
-                className={style.input}
-                type={visible ? "text" : "password"}
-                onChange={handlePasswordChange}
-                placeholder=" "
-                required
-                minLength="6"
-              />
-              <div
-                className={`${style.eye} ${style.eye_open}`}
-                onClick={toggleShowPassword}
-              >
-                {visible ? (
-                  <img src="/public/images/eye_open.svg" />
-                ) : (
-                  <img src="/public/images/eye.svg" />
-                )}
+        <Formik
+          initialValues={{ email: "", password: "", repeatPassword: "" }}
+          validationSchema={validationSchemaSignUp}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched, setFieldTouched }) => (
+            <Form autoComplete="off">
+              <div className={style.social_media}>
+                <button className={style.btn_google}>
+                  <img src="/public/images/google.svg" alt="google" />
+                  Продовжити з Google
+                </button>
+                <button className={style.btn_apple}>
+                  <img src="/public/images/apple.svg" alt="apple" />
+                </button>
+                <button className={style.btn_facebook}>
+                  <img src="/public/images/facebook.svg" alt="facebook" />
+                </button>
               </div>
-            </label>
+              <p className={style.text_or}>або</p>
 
-            <label className={style.label}>
-              {" "}
-              Підтвердіть пароль<span>*</span>
-              <input
-                value={repeatePassword}
-                name="password"
-                className={style.input}
-                type={visibleRepeat ? "text" : "password"}
-                onChange={handleRepeatePasswordChange}
-                placeholder=" "
-                required
-                minLength="6"
-              />
-              <div
-                className={`${style.eye} ${style.eye_open}`}
-                onClick={toggleShowRepeatPassword}
-              >
-                {visibleRepeat ? (
-                  <img src="/public/images/eye_open.svg" />
-                ) : (
-                  <img src="/public/images/eye.svg" />
-                )}
+              <div className={style.contsiner_input}>
+                <label className={style.label}>
+                  {" "}
+                  Введіть email <span>*</span>
+                  <Field
+                    name="email"
+                    type="email"
+                    placeholder=" "
+                    className={`${style.input} ${
+                      errors.email && touched.email
+                        ? style.input_error
+                        : inputState.email && !errors.email
+                        ? style.input_success
+                        : null
+                    }`}
+                    onInput={(e) => {
+                      const value = e.target.value;
+                      setInputState((prevState) => ({
+                        ...prevState,
+                        email: value,
+                      }));
+                      setFieldTouched("email", true);
+                    }}
+                  />
+                  <ErrorMessage
+                    className={`${style.message} ${style.message_error}`}
+                    name="email"
+                    component="div"
+                  />
+                  {/* {errors.email && touched.email ? (
+                    <div className={style.message_error}></div>
+                  ) : inputState.email && !errors.email ? (
+                    <div className={style.message_success}>Email is secure</div>
+                  ) : null} */}
+                </label>
+
+                <label className={style.label}>
+                  {" "}
+                  Пароль <span>*</span>
+                  <Field
+                    name="password"
+                    type={visible ? "text" : "password"}
+                    placeholder=" "
+                    className={`${style.input} ${
+                      errors.password && touched.password
+                        ? style.input_error
+                        : inputState.password && !errors.password
+                        ? style.input_success
+                        : null
+                    }`}
+                    onInput={(e) => {
+                      const value = e.target.value;
+                      setInputState((prevState) => ({
+                        ...prevState,
+                        password: value,
+                      }));
+                      setFieldTouched("password", true);
+                    }}
+                  />
+                  <div
+                    className={`${style.eye} ${style.eye_open}`}
+                    onClick={toggleShowPassword}
+                  >
+                    {visible ? (
+                      <img src="/public/images/eye_open.svg" />
+                    ) : (
+                      <img src="/public/images/eye.svg" />
+                    )}
+                  </div>
+                  <ErrorMessage
+                    className={`${style.message} ${style.message_error}`}
+                    name="password"
+                    component="div"
+                  />
+                  {/* {errors.password && touched.password ? (
+                    <div
+                      className={`${style.message} ${style.message_error}`}
+                    ></div>
+                  ) : inputState.password && !errors.password ? (
+                    <div
+                      className={`${style.message} ${style.message_success}`}
+                    >
+                      Password is secure
+                    </div>
+                  ) : null} */}
+                </label>
+
+                <label className={style.label}>
+                  {" "}
+                  Підтвердіть пароль<span>*</span>
+                  <Field
+                    name="repeatPassword"
+                    type={visibleRepeat ? "text" : "password"}
+                    placeholder=" "
+                    className={`${style.input} ${
+                      errors.repeatPassword && touched.repeatPassword
+                        ? style.input_error
+                        : inputState.repeatPassword && !errors.repeatPassword
+                        ? style.input_success
+                        : null
+                    }`}
+                    onInput={(e) => {
+                      const value = e.target.value;
+                      setInputState((prevState) => ({
+                        ...prevState,
+                        repeatPassword: value,
+                      }));
+                      setFieldTouched("repeatPassword", true);
+                    }}
+                  />
+                  <div
+                    className={`${style.eye} ${style.eye_open}`}
+                    onClick={toggleShowRepeatPassword}
+                  >
+                    {visibleRepeat ? (
+                      <img src="/public/images/eye_open.svg" />
+                    ) : (
+                      <img src="/public/images/eye.svg" />
+                    )}
+                  </div>
+                  <ErrorMessage
+                    className={`${style.message} ${style.message_error}`}
+                    name="repeatPassword"
+                    component="div"
+                  />
+                  {/* {errors.repeatPassword && touched.repeatPassword ? (
+                    <div
+                      className={`${style.message} ${style.message_error}`}
+                    ></div>
+                  ) : inputState.repeatPassword && !errors.repeatPassword ? (
+                    <div
+                      className={`${style.message} ${style.message_success}`}
+                    >
+                      Password is secure
+                    </div>
+                  ) : null} */}
+                </label>
               </div>
-            </label>
-            <div>
-              {lengthError && (
-                <p style={{ color: "red" }}>минимум 6 символов</p>
-              )}
-              {passwordMatchError && (
-                <p style={{ color: "red" }}>пароли не совпадают</p>
-              )}
-              {passwordStrength !== null && !lengthError && (
-                <p style={{ color: getStrangeColor }}></p>
-              )}
-            </div>
-          </div>
 
-          <div className={style.checkbox}>
-            <input className={style.checkbox_remember} type="checkbox" />
-            <p className={style.checkbox_text}> запам’ятати мене </p>
-          </div>
+              <div className={style.checkbox}>
+                <input className={style.checkbox_remember} type="checkbox" />
+                <p className={style.checkbox_text}> запам’ятати мене </p>
+              </div>
 
-          <div className={style.checkbox}>
-            <input className={style.checkbox_ok} type="checkbox" required />
-            <p className={style.checkbox_text}>
-              {" "}
-              Натискаючи кнопку, ви даєте згоду на обробку своїх персональних
-              даних і погоджуєтесь <a href="#">з правилами надання послуг</a> та
-              з політикою конфіденційності.{" "}
-            </p>
-          </div>
+              <div className={style.checkbox}>
+                <input className={style.checkbox_ok} type="checkbox" required />
+                <p className={style.checkbox_text}>
+                  {" "}
+                  Натискаючи кнопку, ви даєте згоду на обробку своїх
+                  персональних даних і погоджуєтесь{" "}
+                  <a href="#">з правилами надання послуг</a> та з політикою
+                  конфіденційності.{" "}
+                </p>
+              </div>
 
-          <button className={style.btn_submite} type="submit">
-            Зареєструватися
-          </button>
-        </form>
+              <button className={style.btn_submite} type="submit">
+                Зареєструватися
+              </button>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

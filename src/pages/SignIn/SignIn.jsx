@@ -1,55 +1,23 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import validationSchemaSignIn from '../../schemas/ValidationSchemaSignInForm';
 import style from "./SignIn.module.css";
 
 const SignIn = () => {
   const [visible, setVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-
-  const validateEmail = (email) => {
-    const regEmail =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!regEmail.test(email)) {
-      return setError("Invalid Email");
-    } else if (regEmail.test(email)) {
-      return true;
-    }
-  };
-
-  const validatePassword = (password) => {
-    const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
-    if (!regPassword.test(password)) {
-      return setError("Invalid Password");
-    } else if (regPassword.test(password)) {
-      return true;
-    }
-  };
-
-  const handleEmailChange = (e) => {
-    e.preventDefault();
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    validateEmail(email);
-  };
-
-  const handlePasswordChange = (e) => {
-    e.preventDefault();
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    validatePassword(password);
-  };
+  const [inputState, setInputState] = useState({
+    email: '',
+    password: '',
+  });
 
   const toggleShowPassword = () => {
     setVisible(!visible);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email);
-    console.log(password);
+    console.log(inputState.email);
+    console.log(inputState.password);
   };
 
   return (
@@ -66,8 +34,14 @@ const SignIn = () => {
           </li>
           <li className={style.sign_in_text}>Вхід</li>
         </ul>
-
-        <form onSubmit={handleSubmit}>
+        
+        <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={validationSchemaSignIn}
+      onSubmit={handleSubmit}
+    >
+      {({ errors, touched, setFieldTouched }) => (
+        <Form onSubmit={handleSubmit} autoComplete="off">
           <div className={style.social_media}>
             <button className={style.btn_google}>
               <img src="/public/images/google.svg" alt="google" />
@@ -86,29 +60,55 @@ const SignIn = () => {
             <label className={style.label}>
               {" "}
               Введіть email <span>*</span>
-              <input
+              <Field
                 name="email"
-                value={email}
-                className={style.input}
                 type="email"
-                onChange={handleEmailChange}
                 placeholder=" "
-                required
+                className={`${style.input} ${
+                    errors.email && touched.email
+                      ? style.input_error
+                      : inputState.email && !errors.email
+                      ? style.input_success
+                      : null
+                  }`}
+                  onInput={e => {
+                    const value = e.target.value;
+                    setInputState(prevState => ({
+                      ...prevState,
+                      email: value,
+                    }));
+                    setFieldTouched('email', true); 
+                  }}
               />
+              <ErrorMessage
+              className={`${style.message} ${style.message_error}`}
+              name="email"
+              component="div"
+            />
             </label>
 
             <label className={style.label}>
               {" "}
               Пароль <span>*</span>
-              <input
+              <Field
                 name="password"
-                value={password}
-                className={style.input}
                 type={visible ? "text" : "password"}
-                onChange={handlePasswordChange}
                 placeholder=" "
-                required
-                minLength="6"
+                className={`${style.input} ${
+                    errors.password && touched.password
+                      ? style.input_error
+                      : inputState.password && !errors.password
+                      ? style.input_success
+                      : null
+                  }`}
+                  onInput={e => {
+                    const value = e.target.value;
+                    setInputState(prevState => ({
+                      ...prevState,
+                      password: value,
+                    }));
+                    setFieldTouched('password', true); 
+                  }}
               />
               <div
                 className={`${style.eye} ${style.eye_open}`}
@@ -120,6 +120,11 @@ const SignIn = () => {
                   <img src="/public/images/eye.svg" />
                 )}
               </div>
+              <ErrorMessage
+              className={`${style.message} ${style.message_error}`}
+              name="password"
+              component="div"
+            />
               <a href="#">Забули пароль?</a>
             </label>
           </div>
@@ -132,7 +137,9 @@ const SignIn = () => {
           <button className={style.btn_submite} type="submit">
             Увійти
           </button>
-        </form>
+        </Form>
+        )}
+        </Formik>
       </div>
     </div>
   );
