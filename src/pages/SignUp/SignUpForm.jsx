@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import validationSchemaSignUp from "../../schemas/ValidationSchemaSignUpForm";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useDispatch } from 'react-redux';
+import { register } from "../../redux/auth/operations";
 
 import style from "./SignUp.module.css";
 
@@ -22,10 +24,18 @@ const SignUp = () => {
     setVisibleRepeat(!visibleRepeat);
   };
 
-  const handleSubmit = (e) => {
-    console.log(inputState.email);
-    console.log(inputState.password);
-    console.log(inputState.repeatPassword);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const onSubmit = ( values, { resetForm } ) => {
+  
+   dispatch(register(values));
+   if(register(values)) {
+    navigate('/')
+   }
+    console.log(values);
+    resetForm();
   };
 
   return (
@@ -46,9 +56,9 @@ const SignUp = () => {
         <Formik
           initialValues={{ email: "", password: "", repeatPassword: "" }}
           validationSchema={validationSchemaSignUp}
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
         >
-          {({ errors, touched, setFieldTouched }) => (
+          {({ errors, touched, setFieldTouched, isSubmitting }) => (
             <Form autoComplete="off">
               <div className={style.social_media}>
                 <button className={style.btn_google}>
@@ -219,7 +229,7 @@ const SignUp = () => {
                 </p>
               </div>
 
-              <button className={style.btn_submite} type="submit">
+              <button disabled={isSubmitting} className={style.btn_submite} type="submit">
                 Зареєструватися
               </button>
             </Form>

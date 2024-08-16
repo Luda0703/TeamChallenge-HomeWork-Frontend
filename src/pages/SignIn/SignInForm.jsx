@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import validationSchemaSignIn from '../../schemas/ValidationSchemaSignInForm';
 import style from "./SignIn.module.css";
+import { useDispatch } from 'react-redux';
+import { logIn } from "../../redux/auth/operations";
 
 const SignIn = () => {
   const [visible, setVisible] = useState(false);
@@ -15,9 +17,17 @@ const SignIn = () => {
     setVisible(!visible);
   };
 
-  const handleSubmit = (e) => {
-    console.log(inputState.email);
-    console.log(inputState.password);
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = ( values, { resetForm } ) => {
+    dispatch(logIn(values));
+    if(logIn(values)) {
+      navigate('./')
+    }
+    console.log(values);
+    resetForm();
   };
 
   return (
@@ -41,7 +51,7 @@ const SignIn = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, touched, setFieldTouched }) => (
-        <Form onSubmit={handleSubmit} autoComplete="off">
+        <Form autoComplete="off">
           <div className={style.social_media}>
             <button className={style.btn_google}>
               <img src="/public/images/google.svg" alt="google" />

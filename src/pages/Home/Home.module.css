@@ -1,0 +1,16 @@
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  /* background-color: #e4f3fb; */
+  padding-top: 45px;
+  padding-bottom: 45px;
+  padding-left: 45px;
+  padding-right: 45px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav_list {
+  display: flex;
+  gap: 50px;
+}
