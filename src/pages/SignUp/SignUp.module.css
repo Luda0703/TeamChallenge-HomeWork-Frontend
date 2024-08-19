@@ -304,17 +304,7 @@ button {
 .checkbox {
   display: flex;
   gap: 16px;
-  margin-bottom: 8px;
-}
-
-.checkbox:required {
-  border: 1.5px solid,
-    linear-gradient(
-      313.87deg,
-      rgba(255, 255, 255, 0.8) -2.9%,
-      rgba(255, 255, 255, 0) 104.25%
-    ),
-    linear-gradient(0deg, rgba(255, 15, 15, 0.6), rgba(255, 15, 15, 0.6));
+  margin-bottom: 11px;
 }
 
 .checkbox_text {
@@ -323,17 +313,67 @@ button {
   font-size: 14px;
   line-height: 16.71px;
   color: #030712;
+  width: 416px;
 }
 
-.checkbox_remember {
-  max-width: 100%;
-  box-shadow: 5px 5px 6px 0px rgba(188, 195, 221, 0.4);
-}
+input[type='checkbox'],
+      label {
+        cursor: pointer;
+      }
+    
+      input[type='checkbox'] {
+        position: relative;
+        height: 18px;
+        width: 18px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: none;
+        
+      }
 
-.checkbox_ok {
-  max-width: 100%;
-  border: 1.5px solid #ff0f0f;
-}
+      input[type='checkbox']::before {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(317.7deg, rgba(184, 184, 184, 0.4) 0%, rgba(255, 255, 255, 0.4) 105.18%);
+        border: 0.2px solid #FFFFFF66;
+        border-radius: 3px;
+        box-shadow: 2.5px 2.5px 5px 0px #CBD6FB80 inset, -2.5px -2.5px 5px 0px #FAFBFF inset, 5px 5px 6px 0px #BCC3DD66;
+      }
+
+      input[type='checkbox']:checked::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        transform: translate(-50%, -50%);
+        border: 0.2px solid #FFFFFF66;
+        border-radius: 3px;
+        visibility: visible;
+        box-shadow: 2.5px 2.5px 5px 0px #366CBD inset, -2.5px -2.5px 5px 0px #FAFBFF1A inset;
+        background-image: url('../../../public/images/checkbox.svg');
+      }
+
+      .checkbox_ok:not(:checked)::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 16.5px;
+        height: 16.5px;
+        transform: translate(-50%, -50%);
+        background: #E7EBF0;
+        border: 1.5px solid #dc2626;
+        border-radius: 3px;
+        box-shadow: 2.5px 2.5px 5px 0px #CBD6FB80 inset, -2.5px -2.5px 5px 0px #FAFBFF inset;
+      }
 
 p a {
   font-family: "SF Pro Display";

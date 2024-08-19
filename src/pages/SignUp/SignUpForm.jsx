@@ -10,11 +10,16 @@ import style from "./SignUp.module.css";
 const SignUp = () => {
   const [visible, setVisible] = useState(false);
   const [visibleRepeat, setVisibleRepeat] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [inputState, setInputState] = useState({
     email: "",
     password: "",
     repeatPassword: "",
   });
+
+  const handleRememberMe = () => {
+    setRememberMe(!rememberMe)
+  }
 
   const toggleShowPassword = () => {
     setVisible(!visible);
@@ -31,9 +36,14 @@ const SignUp = () => {
   const onSubmit = ( values, { resetForm } ) => {
   
    dispatch(register(values));
+   if(rememberMe) {
+     localStorage.setItem('userToken', 'your_user_token');
+   }
+
    if(register(values)) {
     navigate('/')
    }
+
     console.log(values);
     resetForm();
   };
@@ -58,7 +68,7 @@ const SignUp = () => {
           validationSchema={validationSchemaSignUp}
           onSubmit={onSubmit}
         >
-          {({ errors, touched, setFieldTouched, isSubmitting }) => (
+          {({ errors, touched, setFieldTouched, isValid, dirty }) => (
             <Form autoComplete="off">
               <div className={style.social_media}>
                 <button className={style.btn_google}>
@@ -213,23 +223,28 @@ const SignUp = () => {
                 </label>
               </div>
 
-              <div className={style.checkbox}>
-                <input className={style.checkbox_remember} type="checkbox" />
-                <p className={style.checkbox_text}> запам’ятати мене </p>
-              </div>
+                <label className={style.checkbox} >
+                <input 
+                className={style.checkbox_remember} 
+                type="checkbox" 
+                checked={rememberMe}
+                onChange={handleRememberMe}
+                />
+                <span className={style.checkbox_text}> запам’ятати мене </span>
+                </label>
 
-              <div className={style.checkbox}>
+              <label className={style.checkbox} >
                 <input className={style.checkbox_ok} type="checkbox" required />
-                <p className={style.checkbox_text}>
+                <span className={style.checkbox_text}>
                   {" "}
                   Натискаючи кнопку, ви даєте згоду на обробку своїх
                   персональних даних і погоджуєтесь{" "}
                   <a href="#">з правилами надання послуг</a> та з політикою
                   конфіденційності.{" "}
-                </p>
-              </div>
+                </span>
+              </label>
 
-              <button disabled={isSubmitting} className={style.btn_submite} type="submit">
+              <button disabled={!(isValid && dirty)} className={style.btn_submite} type="submit">
                 Зареєструватися
               </button>
             </Form>

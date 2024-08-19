@@ -137,6 +137,9 @@ const SignIn = () => {
             />
               <a href="#">Забули пароль?</a>
             </label>
+            {/* <div className={styles.Text_about_password}>
+            <Link to={'/forgotyourpassword'}>Forgot your password?</Link>
+          </div> */}
           </div>
 
           <div className={style.checkbox}>
